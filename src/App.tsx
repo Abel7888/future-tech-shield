@@ -8,7 +8,9 @@ import Index from "./pages/Index";
 import Industries from "./pages/Industries";
 import About from "./pages/About";
 import Insights from "./pages/Insights";
+import ArticleView from "./pages/ArticleView";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,8 +25,10 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/industries" element={<Industries />} />
           <Route path="/insights" element={<Insights />} />
+          <Route path="/insights/:id" element={<ArticleView />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
