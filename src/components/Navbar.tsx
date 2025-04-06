@@ -25,9 +25,11 @@ const Navbar = () => {
           <Link to="/industries" className="text-foreground hover:text-cyber-purple transition-colors">Industries</Link>
           <Link to="/insights" className="text-foreground hover:text-cyber-purple transition-colors">Insights</Link>
           <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors">About Us</Link>
-          <Button variant="default" className="bg-cyber-purple hover:bg-cyber-purple-light ml-2">
-            Contact Us
-          </Button>
+          <Link to="/contact">
+            <Button variant="default" className="bg-cyber-purple hover:bg-cyber-purple-light ml-2">
+              Contact Us
+            </Button>
+          </Link>
         </div>
         
         {/* Mobile Menu Button */}
@@ -44,13 +46,14 @@ const Navbar = () => {
         <div className="lg:hidden py-4 bg-background border-t border-border">
           <div className="container mx-auto px-4 flex flex-col space-y-3">
             <Link to="/" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Home</Link>
-            <Link to="/solutions" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Solutions</Link>
             <Link to="/industries" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Industries</Link>
             <Link to="/insights" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Insights</Link>
             <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>About Us</Link>
-            <Button variant="default" className="bg-cyber-purple hover:bg-cyber-purple-light w-full" onClick={toggleMenu}>
-              Contact Us
-            </Button>
+            <Link to="/contact" onClick={toggleMenu}>
+              <Button variant="default" className="bg-cyber-purple hover:bg-cyber-purple-light w-full">
+                Contact Us
+              </Button>
+            </Link>
           </div>
         </div>
       )}
