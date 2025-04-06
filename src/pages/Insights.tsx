@@ -1,8 +1,7 @@
-
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { ArrowRight, TrendingUp, Shield, Cpu, Lock, FileText, Filter, Search } from 'lucide-react';
+import { ArrowRight, TrendingUp, Shield, Cpu, Lock, FileText, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -22,7 +21,7 @@ const Insights = () => {
                 Security Technology Insights
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
-                Expert perspectives on marketing emerging security solutions in a rapidly evolving landscape.
+                Expert perspectives on marketing emerging security solutions from our team of specialists.
               </p>
               
               <div className="flex flex-col sm:flex-row items-center gap-4 max-w-xl mx-auto">
@@ -171,16 +170,16 @@ const Insights = () => {
           </div>
         </section>
         
-        {/* Newsletter Section */}
+        {/* Newsletter Section - Modified to emphasize subscription without submission */}
         <section className="py-16 relative overflow-hidden">
           <div className="absolute inset-0 bg-cyber-purple/10 -z-10"></div>
           <div className="absolute inset-0 bg-cyber-pattern bg-[size:20px_20px] opacity-[0.05] -z-10"></div>
           
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Stay Updated on Security Marketing Trends</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Stay Updated on Our Latest Insights</h2>
               <p className="text-lg text-muted-foreground mb-8">
-                Subscribe to our newsletter for the latest insights on marketing emerging security technologies.
+                Subscribe to our newsletter to receive our latest articles and security marketing perspectives directly to your inbox.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <Input 

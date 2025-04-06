@@ -6,7 +6,7 @@ import * as z from "zod";
 import { useToast } from "@/hooks/use-toast";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Mail, PhoneCall, Send, MessageSquare, User, FileText } from 'lucide-react';
+import { Mail, PhoneCall, Send, MessageSquare, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -24,8 +24,8 @@ const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
   phone: z.string().optional(),
-  topic: z.string().min(2, { message: "Please select a topic." }),
-  title: z.string().min(5, { message: "Title must be at least 5 characters." }),
+  inquiryType: z.string().min(2, { message: "Please select an inquiry type." }),
+  subject: z.string().min(5, { message: "Subject must be at least 5 characters." }),
   message: z.string().min(10, { message: "Message must be at least 10 characters." }),
 });
 
@@ -38,8 +38,8 @@ const Contact = () => {
       name: "",
       email: "",
       phone: "",
-      topic: "Content Submission",
-      title: "",
+      inquiryType: "General Inquiry",
+      subject: "",
       message: "",
     },
   });
@@ -49,8 +49,8 @@ const Contact = () => {
     console.log(values);
     
     toast({
-      title: "Submission received",
-      description: "Thank you for your content submission. We'll review it shortly.",
+      title: "Message received",
+      description: "Thank you for your inquiry. We'll get back to you shortly.",
     });
     
     form.reset();
@@ -71,7 +71,7 @@ const Contact = () => {
                 Get in Touch
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
-                Submit your industry insights or contact our team for more information.
+                Have questions about our services? Contact our team for more information.
               </p>
             </div>
           </div>
@@ -110,8 +110,8 @@ const Contact = () => {
                       <MessageSquare className="text-cyber-purple h-5 w-5" />
                     </div>
                     <div>
-                      <p className="font-medium">Content Submissions</p>
-                      <p className="text-muted-foreground">Share your industry insights and thought leadership using the form.</p>
+                      <p className="font-medium">Office Hours</p>
+                      <p className="text-muted-foreground">Monday-Friday: 9am-5pm EST</p>
                     </div>
                   </div>
                 </div>
@@ -120,7 +120,7 @@ const Contact = () => {
               {/* Form */}
               <div className="md:w-2/3">
                 <div className="cyber-card p-6 md:p-8">
-                  <h2 className="text-2xl font-bold mb-6">Submit Your Insights</h2>
+                  <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
                   
                   <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -180,22 +180,21 @@ const Contact = () => {
                         
                         <FormField
                           control={form.control}
-                          name="topic"
+                          name="inquiryType"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Submission Type</FormLabel>
+                              <FormLabel>Inquiry Type</FormLabel>
                               <FormControl>
                                 <div className="relative">
-                                  <FileText className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                  <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                                   <select 
                                     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 pl-10 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                                     {...field}
                                   >
-                                    <option value="Content Submission">Content Submission</option>
-                                    <option value="Guest Post">Guest Post</option>
-                                    <option value="Industry Report">Industry Report</option>
-                                    <option value="Case Study">Case Study</option>
                                     <option value="General Inquiry">General Inquiry</option>
+                                    <option value="Partnership Opportunity">Partnership Opportunity</option>
+                                    <option value="Service Information">Service Information</option>
+                                    <option value="Quote Request">Quote Request</option>
                                   </select>
                                 </div>
                               </FormControl>
@@ -207,12 +206,12 @@ const Contact = () => {
                       
                       <FormField
                         control={form.control}
-                        name="title"
+                        name="subject"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Title</FormLabel>
+                            <FormLabel>Subject</FormLabel>
                             <FormControl>
-                              <Input placeholder="Title of your submission" {...field} />
+                              <Input placeholder="Subject of your message" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -227,13 +226,13 @@ const Contact = () => {
                             <FormLabel>Message</FormLabel>
                             <FormControl>
                               <Textarea 
-                                placeholder="Write your message or content submission here..." 
+                                placeholder="Write your message here..." 
                                 className="min-h-[200px] resize-y"
                                 {...field}
                               />
                             </FormControl>
                             <FormDescription>
-                              Share your insights, article draft, or inquiries. For longer submissions, you can mention file attachments and we'll contact you.
+                              Please provide details about your inquiry and we'll get back to you as soon as possible.
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
