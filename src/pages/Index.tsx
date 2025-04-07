@@ -6,7 +6,7 @@ import SolutionsGrid from '@/components/SolutionsGrid';
 import IndustriesGrid from '@/components/IndustriesGrid';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Newspaper, Lightbulb, TrendingUp } from 'lucide-react';
+import { ArrowRight, Newspaper, Lightbulb, TrendingUp, Mail, Building, Briefcase } from 'lucide-react';
 
 const Index = () => {
   return (
@@ -16,6 +16,56 @@ const Index = () => {
       <main className="flex-grow">
         {/* Hero Section */}
         <HeroSection />
+        
+        {/* Newsletter & Reach Section */}
+        <section className="py-16 bg-gradient-to-r from-cyber-blue-dark to-cyber-blue">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="cyber-card p-8">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
+                  Industry-Leading Reach
+                </h2>
+                
+                <div className="flex flex-col md:flex-row gap-8 items-center">
+                  <div className="md:w-1/2">
+                    <div className="flex items-center mb-4">
+                      <Mail className="w-8 h-8 text-cyber-purple mr-3" />
+                      <h3 className="text-2xl font-semibold">Our Newsletter</h3>
+                    </div>
+                    <p className="text-lg mb-6">
+                      Our cybersecurity insights newsletter reaches over <span className="font-bold text-cyber-purple">40,000 C-level executives</span> including CEOs, CTOs, and CIOs across high-value industries.
+                    </p>
+                    <Button className="cyber-btn cyber-glow">
+                      Subscribe Now <ArrowRight size={18} className="ml-2" />
+                    </Button>
+                  </div>
+                  
+                  <div className="md:w-1/2">
+                    <h3 className="text-xl font-semibold mb-4">Key Industries We Serve:</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="flex items-center">
+                        <Building className="w-5 h-5 text-cyber-purple mr-2" />
+                        <span>Healthcare</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Briefcase className="w-5 h-5 text-cyber-purple mr-2" />
+                        <span>Finance</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Building className="w-5 h-5 text-cyber-purple mr-2" />
+                        <span>Commercial Real Estate</span>
+                      </div>
+                      <div className="flex items-center">
+                        <TrendingUp className="w-5 h-5 text-cyber-purple mr-2" />
+                        <span>Supply Chain</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         
         {/* Solutions Grid */}
         <SolutionsGrid />
