@@ -1,9 +1,9 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import SolutionsGrid from '@/components/SolutionsGrid';
-import IndustriesGrid from '@/components/IndustriesGrid';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Newspaper, Lightbulb, TrendingUp, Mail, Building, Briefcase } from 'lucide-react';
@@ -70,9 +70,6 @@ const Index = () => {
         {/* Solutions Grid */}
         <SolutionsGrid />
         
-        {/* Industries Grid */}
-        <IndustriesGrid />
-        
         {/* Latest Insights Section */}
         <section className="py-16 md:py-24 bg-cyber-blue">
           <div className="container mx-auto px-4">
@@ -115,16 +112,17 @@ const Index = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-3">{article.title}</h3>
                   <p className="text-muted-foreground mb-6 flex-grow">{article.excerpt}</p>
-                  <Button variant="link" className="p-0 text-cyber-purple-light hover:text-cyber-purple justify-start">
-                    Read more <ArrowRight size={16} className="ml-2" />
-                  </Button>
                 </div>
               ))}
             </div>
             
             <div className="mt-12 text-center">
-              <Button variant="outline" className="border-cyber-purple text-cyber-purple hover:bg-cyber-purple/10">
-                View All Insights
+              <Button 
+                variant="outline" 
+                className="border-cyber-purple text-cyber-purple hover:bg-cyber-purple/10"
+                asChild
+              >
+                <Link to="/insights">View All Insights</Link>
               </Button>
             </div>
           </div>
@@ -141,8 +139,8 @@ const Index = () => {
               <p className="text-lg text-muted-foreground mb-8">
                 Connect with our security experts to discuss how our solutions can address your specific challenges.
               </p>
-              <Button className="cyber-btn cyber-glow text-base">
-                Get in Touch <ArrowRight size={18} className="ml-2" />
+              <Button className="cyber-btn cyber-glow text-base" asChild>
+                <Link to="/contact">Get in Touch <ArrowRight size={18} className="ml-2" /></Link>
               </Button>
             </div>
           </div>

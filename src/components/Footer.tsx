@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Shield, ArrowRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -13,7 +14,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Shield className="h-7 w-7 text-cyber-purple" />
-              <span className="text-lg font-bold">FutureTech Shield</span>
+              <span className="text-lg font-bold">Data Shield Security</span>
             </div>
             <p className="text-muted-foreground mb-4">
               Leading the way in emerging technology security solutions across industries.
@@ -24,12 +25,11 @@ const Footer = () => {
           <div>
             <h5 className="font-semibold mb-4">Quick Links</h5>
             <ul className="space-y-2">
-              <li><a href="#" className="text-muted-foreground hover:text-cyber-purple transition-colors">Home</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-cyber-purple transition-colors">Solutions</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-cyber-purple transition-colors">Industries</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-cyber-purple transition-colors">Insights</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-cyber-purple transition-colors">About Us</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-cyber-purple transition-colors">Contact</a></li>
+              <li><Link to="/" className="text-muted-foreground hover:text-cyber-purple transition-colors">Home</Link></li>
+              <li><Link to="/industries" className="text-muted-foreground hover:text-cyber-purple transition-colors">Industries</Link></li>
+              <li><Link to="/insights" className="text-muted-foreground hover:text-cyber-purple transition-colors">Insights</Link></li>
+              <li><Link to="/about" className="text-muted-foreground hover:text-cyber-purple transition-colors">About Us</Link></li>
+              <li><Link to="/contact" className="text-muted-foreground hover:text-cyber-purple transition-colors">Contact</Link></li>
             </ul>
           </div>
           
@@ -66,12 +66,12 @@ const Footer = () => {
         
         <div className="border-t border-cyber-blue pt-6 mt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm mb-4 md:mb-0">
-            © 2025 FutureTech Shield. All rights reserved.
+            © 2025 Data Shield Security. All rights reserved.
           </p>
           <div className="flex gap-4">
             <a href="#" className="text-muted-foreground hover:text-cyber-purple transition-colors text-sm">Privacy Policy</a>
             <a href="#" className="text-muted-foreground hover:text-cyber-purple transition-colors text-sm">Terms of Service</a>
-            <a href="#" className="text-muted-foreground hover:text-cyber-purple transition-colors text-sm">Contact</a>
+            <Link to="/contact" className="text-muted-foreground hover:text-cyber-purple transition-colors text-sm">Contact</Link>
           </div>
         </div>
       </div>
