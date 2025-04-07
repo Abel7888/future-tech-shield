@@ -2,7 +2,7 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Cpu, Code, TrendingUp, Users, Shield, MessageSquare, Rocket, Target, ArrowRight } from 'lucide-react';
+import { Cpu, Code, TrendingUp, Users, Shield, MessageSquare, Rocket, Target, ArrowRight, Mail, Building, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const About = () => {
@@ -23,12 +23,62 @@ const About = () => {
                     Marketing Emerging Tech Security Solutions
                   </h1>
                   <p className="text-xl text-muted-foreground mb-8">
-                    We're the bridge between complex security innovations and the businesses that need them.
+                    We're the leading B2B agency bridging complex security innovations and the businesses that need them.
                   </p>
                 </div>
                 <div className="md:w-1/2 flex justify-center">
                   <div className="w-64 h-64 bg-gradient-to-br from-cyber-purple/30 to-cyber-purple rounded-full flex items-center justify-center">
                     <Shield className="w-32 h-32 text-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Newsletter & Reach Section */}
+        <section className="py-16 bg-gradient-to-r from-cyber-blue-dark to-cyber-blue">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="cyber-card p-8">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
+                  Industry-Leading Reach
+                </h2>
+                
+                <div className="flex flex-col md:flex-row gap-8 items-center">
+                  <div className="md:w-1/2">
+                    <div className="flex items-center mb-4">
+                      <Mail className="w-8 h-8 text-cyber-purple mr-3" />
+                      <h3 className="text-2xl font-semibold">Our Newsletter</h3>
+                    </div>
+                    <p className="text-lg mb-6">
+                      Our cybersecurity insights newsletter reaches over <span className="font-bold text-cyber-purple">40,000 C-level executives</span> including CEOs, CTOs, and CIOs across high-value industries.
+                    </p>
+                    <Button className="cyber-btn cyber-glow">
+                      Subscribe Now <ArrowRight size={18} className="ml-2" />
+                    </Button>
+                  </div>
+                  
+                  <div className="md:w-1/2">
+                    <h3 className="text-xl font-semibold mb-4">Key Industries We Serve:</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="flex items-center">
+                        <Building className="w-5 h-5 text-cyber-purple mr-2" />
+                        <span>Healthcare</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Briefcase className="w-5 h-5 text-cyber-purple mr-2" />
+                        <span>Finance</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Building className="w-5 h-5 text-cyber-purple mr-2" />
+                        <span>Commercial Real Estate</span>
+                      </div>
+                      <div className="flex items-center">
+                        <TrendingUp className="w-5 h-5 text-cyber-purple mr-2" />
+                        <span>Supply Chain</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -120,6 +170,37 @@ const About = () => {
                   <p className="text-sm text-muted-foreground">{member.background}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+        
+        {/* Industry Engagement Section */}
+        <section className="py-16 bg-cyber-blue/50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold text-center mb-12">How We Engage With Industry Leaders</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="cyber-card p-8">
+                  <h3 className="text-xl font-bold mb-4 flex items-center">
+                    <MessageSquare className="w-6 h-6 mr-3 text-cyber-purple" />
+                    Thought Leadership
+                  </h3>
+                  <p className="text-muted-foreground">
+                    We highlight emerging cybersecurity threats and trends through our industry-leading newsletter, reaching decision-makers who need to stay ahead of evolving risks.
+                  </p>
+                </div>
+                
+                <div className="cyber-card p-8">
+                  <h3 className="text-xl font-bold mb-4 flex items-center">
+                    <Shield className="w-6 h-6 mr-3 text-cyber-purple" />
+                    Solution Spotlight
+                  </h3>
+                  <p className="text-muted-foreground">
+                    We partner with innovative security providers to showcase solutions making real impact against today's most sophisticated threats.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
