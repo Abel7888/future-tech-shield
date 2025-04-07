@@ -16,7 +16,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
           <Shield className="h-8 w-8 text-cyber-purple" />
-          <span className="text-xl font-bold text-foreground">FutureTech Shield</span>
+          <span className="text-xl font-bold text-foreground">Data Shield Security</span>
         </Link>
         
         {/* Desktop Navigation */}

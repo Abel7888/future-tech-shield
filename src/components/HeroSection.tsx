@@ -16,23 +16,23 @@ const HeroSection = () => {
         <div className="max-w-4xl mx-auto text-center mb-12">
           <div className="inline-flex items-center mb-3 px-4 py-1.5 rounded-full bg-cyber-purple/10 border border-cyber-purple/20 text-cyber-purple-light text-sm font-medium">
             <Shield size={16} className="mr-2" />
-            Next Generation Security Solutions
+            B2B Cybersecurity Marketing Experts
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
-            Securing the Future of Emerging Tech Across Industries
+            Marketing Emerging Tech Security Solutions Across Industries
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Innovative cybersecurity solutions powering the next generation of digital transformation across healthcare, finance, real estate, construction, and supply chains.
+            We connect innovative cybersecurity providers with decision-makers in healthcare, finance, commercial real estate, and supply chain management.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="cyber-btn cyber-glow text-base">
-              Explore Solutions <ArrowRight size={18} className="ml-2" />
+              Our Marketing Services <ArrowRight size={18} className="ml-2" />
             </Button>
             <Button variant="outline" className="cyber-btn-outline text-base">
-              View by Industry
+              Industry Expertise
             </Button>
           </div>
         </div>
