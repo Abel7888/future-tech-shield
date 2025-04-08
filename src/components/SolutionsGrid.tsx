@@ -3,7 +3,6 @@ import React from 'react';
 import { Lock, UserCheck, AlertTriangle, FileCode, Wifi, Cpu, BarChart3, Database } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 
 const solutions = [
   {
@@ -96,11 +95,6 @@ const SolutionsGrid = () => {
                   {solution.description}
                 </CardDescription>
               </CardContent>
-              <CardFooter>
-                <Button variant="link" className="p-0 text-cyber-purple-light hover:text-cyber-purple">
-                  Learn more
-                </Button>
-              </CardFooter>
             </Card>
           ))}
         </div>
