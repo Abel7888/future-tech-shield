@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -8,17 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { FileText, Save, Clock, Tag, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-
-interface Article {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  category: string;
-  date: string;
-  author: string;
-  published: boolean;
-}
+import { Article } from '@/types';
+import { getAllArticles, saveArticle, deleteArticle } from '@/services/articleService';
 
 const Admin = () => {
   const { toast } = useToast();
@@ -36,14 +26,12 @@ const Admin = () => {
   });
 
   useEffect(() => {
-    // Load saved articles from localStorage
-    const savedArticles = localStorage.getItem('insights-articles');
-    if (savedArticles) {
-      setArticles(JSON.parse(savedArticles));
-    }
+    // Load articles using the service
+    const loadedArticles = getAllArticles();
+    setArticles(loadedArticles);
   }, []);
 
-  const saveArticle = () => {
+  const handleSaveArticle = () => {
     if (!currentArticle.title || !currentArticle.content) {
       toast({
         title: "Missing information",
@@ -53,34 +41,32 @@ const Admin = () => {
       return;
     }
 
-    const newArticle = {
+    const savedArticle = saveArticle({
       ...currentArticle,
-      id: currentArticle.id || Date.now().toString(),
       date: currentArticle.date || new Date().toISOString().split('T')[0]
-    };
-
-    const updatedArticles = currentArticle.id 
-      ? articles.map(article => article.id === currentArticle.id ? newArticle : article)
-      : [...articles, newArticle];
+    });
     
-    setArticles(updatedArticles);
-    localStorage.setItem('insights-articles', JSON.stringify(updatedArticles));
+    // Refresh the articles list
+    setArticles(getAllArticles());
     
     toast({
       title: "Success",
       description: "Your article has been saved successfully."
     });
     
-    setCurrentArticle({
-      id: '',
-      title: '',
-      excerpt: '',
-      content: '',
-      category: 'Marketing Strategy',
-      date: new Date().toISOString().split('T')[0],
-      author: 'Admin',
-      published: false
-    });
+    // Reset form if it was a new article
+    if (!currentArticle.id) {
+      setCurrentArticle({
+        id: '',
+        title: '',
+        excerpt: '',
+        content: '',
+        category: 'Marketing Strategy',
+        date: new Date().toISOString().split('T')[0],
+        author: 'Admin',
+        published: false
+      });
+    }
   };
 
   const publishArticle = () => {
@@ -93,19 +79,14 @@ const Admin = () => {
       return;
     }
 
-    const newArticle = {
+    const publishedArticle = saveArticle({
       ...currentArticle,
-      id: currentArticle.id || Date.now().toString(),
       date: currentArticle.date || new Date().toISOString().split('T')[0],
       published: true
-    };
-
-    const updatedArticles = currentArticle.id 
-      ? articles.map(article => article.id === currentArticle.id ? newArticle : article)
-      : [...articles, newArticle];
+    });
     
-    setArticles(updatedArticles);
-    localStorage.setItem('insights-articles', JSON.stringify(updatedArticles));
+    // Refresh the articles list
+    setArticles(getAllArticles());
     
     toast({
       title: "Published",
@@ -120,10 +101,11 @@ const Admin = () => {
     setCurrentArticle(article);
   };
 
-  const deleteArticle = (id: string) => {
-    const updatedArticles = articles.filter(article => article.id !== id);
-    setArticles(updatedArticles);
-    localStorage.setItem('insights-articles', JSON.stringify(updatedArticles));
+  const handleDeleteArticle = (id: string) => {
+    deleteArticle(id);
+    
+    // Refresh the articles list
+    setArticles(getAllArticles());
     
     toast({
       title: "Deleted",
@@ -246,7 +228,7 @@ const Admin = () => {
                     <div className="flex gap-3">
                       <Button 
                         variant="outline" 
-                        onClick={saveArticle}
+                        onClick={handleSaveArticle}
                       >
                         <Save className="mr-2 h-4 w-4" />
                         Save Draft
@@ -297,7 +279,7 @@ const Admin = () => {
                             <Button 
                               variant="destructive" 
                               size="sm" 
-                              onClick={() => deleteArticle(article.id)}
+                              onClick={() => handleDeleteArticle(article.id)}
                             >
                               Delete
                             </Button>

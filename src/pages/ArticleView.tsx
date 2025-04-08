@@ -1,21 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { ArrowLeft, Calendar, User, Tag, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-interface Article {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  category: string;
-  date: string;
-  author: string;
-  published: boolean;
-}
+import { Article } from '@/types';
+import { getArticleById, getPublishedArticles, seedInitialData } from '@/services/articleService';
 
 const ArticleView = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,24 +14,24 @@ const ArticleView = () => {
   const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    // Load articles from localStorage
-    const savedArticles = localStorage.getItem('insights-articles');
-    if (savedArticles) {
-      const parsedArticles = JSON.parse(savedArticles);
-      const publishedArticles = parsedArticles.filter((article: Article) => article.published);
-      
-      // Find the current article
-      const currentArticle = publishedArticles.find((article: Article) => article.id === id);
+    // Ensure we have initial data
+    seedInitialData();
+    
+    // Find the current article
+    if (id) {
+      const currentArticle = getArticleById(id);
       setArticle(currentArticle || null);
       
       // Find related articles in the same category (up to 3)
       if (currentArticle) {
+        const publishedArticles = getPublishedArticles();
         const related = publishedArticles
-          .filter((article: Article) => article.id !== id && article.category === currentArticle.category)
+          .filter(a => a.id !== id && a.category === currentArticle.category && a.published)
           .slice(0, 3);
         setRelatedArticles(related);
       }
     }
+    
     setLoading(false);
   }, [id]);
 
@@ -83,14 +73,12 @@ const ArticleView = () => {
     );
   }
 
-  // Format the date in a readable way
   const formattedDate = new Date(article.date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
   });
 
-  // Function to render article content with paragraphs
   const renderContent = (content: string) => {
     return content.split('\n\n').map((paragraph, index) => (
       <p key={index} className="mb-6">{paragraph}</p>
@@ -149,7 +137,6 @@ const ArticleView = () => {
           </div>
         </article>
         
-        {/* Related Articles */}
         {relatedArticles.length > 0 && (
           <section className="py-12 bg-cyber-blue">
             <div className="container mx-auto px-4">

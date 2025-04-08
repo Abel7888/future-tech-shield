@@ -8,6 +8,7 @@ import CategoriesSection from '@/components/insights/CategoriesSection';
 import ArticlesGrid from '@/components/insights/ArticlesGrid';
 import NewsletterSection from '@/components/insights/NewsletterSection';
 import { Article } from '@/types';
+import { getPublishedArticles, seedInitialData } from '@/services/articleService';
 
 const Insights = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -15,14 +16,12 @@ const Insights = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Articles');
 
   useEffect(() => {
-    // Load published articles from localStorage
-    const savedArticles = localStorage.getItem('insights-articles');
-    if (savedArticles) {
-      const parsedArticles = JSON.parse(savedArticles);
-      // Only show published articles
-      const publishedArticles = parsedArticles.filter((article: Article) => article.published);
-      setArticles(publishedArticles);
-    }
+    // Ensure we have initial data
+    seedInitialData();
+    
+    // Load published articles using the service
+    const publishedArticles = getPublishedArticles();
+    setArticles(publishedArticles);
   }, []);
 
   // Filter articles based on search query and category
