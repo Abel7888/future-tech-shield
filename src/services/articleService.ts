@@ -25,60 +25,83 @@ const sampleArticles: Article[] = [
   }
 ];
 
-// LocalStorage key
-const STORAGE_KEY = 'insights-articles';
+// LocalStorage key with domain prefix to make it unique per domain
+const STORAGE_KEY = 'datashieldsecurity-articles';
 
 // Function to get all articles
 export const getAllArticles = (): Article[] => {
   try {
     const articlesJson = localStorage.getItem(STORAGE_KEY);
+    
+    // For debugging
+    console.log('Getting articles from localStorage', articlesJson ? 'found' : 'not found');
+    
     if (!articlesJson) {
       // If no articles found, initialize with sample data
+      console.log('Initializing with sample articles');
       saveArticles(sampleArticles);
       return sampleArticles;
     }
-    return JSON.parse(articlesJson);
+    
+    const parsedArticles = JSON.parse(articlesJson);
+    console.log(`Loaded ${parsedArticles.length} articles from storage`);
+    return parsedArticles;
   } catch (error) {
     console.error('Error fetching articles:', error);
-    return [];
+    // If there's an error, return sample articles as fallback
+    return sampleArticles;
   }
 };
 
 // Function to get published articles
 export const getPublishedArticles = (): Article[] => {
   const articles = getAllArticles();
-  return articles.filter(article => article.published);
+  const published = articles.filter(article => article.published);
+  console.log(`Found ${published.length} published articles out of ${articles.length} total`);
+  return published;
 };
 
 // Function to get an article by ID
 export const getArticleById = (id: string): Article | null => {
   const articles = getAllArticles();
-  return articles.find(article => article.id === id) || null;
+  const article = articles.find(article => article.id === id);
+  console.log(`Article with ID ${id} ${article ? 'found' : 'not found'}`);
+  return article || null;
 };
 
 // Function to save all articles
 export const saveArticles = (articles: Article[]): void => {
   try {
+    console.log(`Saving ${articles.length} articles to localStorage`);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
   } catch (error) {
     console.error('Error saving articles:', error);
+    // Show an error in the console with more details
+    if (error instanceof DOMException && error.name === 'QuotaExceededError') {
+      console.error('localStorage quota exceeded. Try clearing some space.');
+    }
   }
 };
 
 // Function to save a single article (create or update)
 export const saveArticle = (article: Article): Article => {
   const articles = getAllArticles();
+  
+  // Make sure we have an ID
   const articleWithId = {
     ...article,
     id: article.id || Date.now().toString()
   };
   
   const existingIndex = articles.findIndex(a => a.id === articleWithId.id);
+  
   if (existingIndex >= 0) {
     // Update existing article
+    console.log(`Updating article with ID ${articleWithId.id}`);
     articles[existingIndex] = articleWithId;
   } else {
     // Add new article
+    console.log(`Adding new article with ID ${articleWithId.id}`);
     articles.push(articleWithId);
   }
   
@@ -88,6 +111,7 @@ export const saveArticle = (article: Article): Article => {
 
 // Function to delete an article
 export const deleteArticle = (id: string): void => {
+  console.log(`Deleting article with ID ${id}`);
   const articles = getAllArticles();
   const updatedArticles = articles.filter(article => article.id !== id);
   saveArticles(updatedArticles);
@@ -97,7 +121,31 @@ export const deleteArticle = (id: string): void => {
 export const seedInitialData = (): void => {
   const articles = getAllArticles();
   if (articles.length === 0) {
+    console.log('No articles found, seeding initial data');
     saveArticles(sampleArticles);
   }
 };
 
+// Test localStorage availability
+export const isLocalStorageAvailable = (): boolean => {
+  try {
+    const testKey = 'test-localStorage';
+    localStorage.setItem(testKey, testKey);
+    const result = localStorage.getItem(testKey) === testKey;
+    localStorage.removeItem(testKey);
+    return result;
+  } catch (e) {
+    return false;
+  }
+};
+
+// Initialize on module load
+(function initialize() {
+  if (!isLocalStorageAvailable()) {
+    console.error('localStorage is not available. Articles will not persist!');
+  } else {
+    console.log('localStorage is available. Articles will persist.');
+    // Ensure we have initial data
+    seedInitialData();
+  }
+})();

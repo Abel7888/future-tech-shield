@@ -8,7 +8,7 @@ import CategoriesSection from '@/components/insights/CategoriesSection';
 import ArticlesGrid from '@/components/insights/ArticlesGrid';
 import NewsletterSection from '@/components/insights/NewsletterSection';
 import { Article } from '@/types';
-import { getPublishedArticles, seedInitialData } from '@/services/articleService';
+import { getPublishedArticles } from '@/services/articleService';
 
 const Insights = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -16,11 +16,9 @@ const Insights = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Articles');
 
   useEffect(() => {
-    // Ensure we have initial data
-    seedInitialData();
-    
     // Load published articles using the service
     const publishedArticles = getPublishedArticles();
+    console.log('Insights page loaded articles:', publishedArticles.length);
     setArticles(publishedArticles);
   }, []);
 

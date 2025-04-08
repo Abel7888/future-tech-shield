@@ -8,12 +8,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { FileText, Save, Clock, Tag, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Article } from '@/types';
-import { getAllArticles, saveArticle, deleteArticle } from '@/services/articleService';
+import { getAllArticles, saveArticle, deleteArticle, isLocalStorageAvailable } from '@/services/articleService';
 
 const Admin = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [articles, setArticles] = useState<Article[]>([]);
+  const [storageAvailable, setStorageAvailable] = useState(true);
   const [currentArticle, setCurrentArticle] = useState<Article>({
     id: '',
     title: '',
@@ -26,10 +27,30 @@ const Admin = () => {
   });
 
   useEffect(() => {
-    // Load articles using the service
-    const loadedArticles = getAllArticles();
-    setArticles(loadedArticles);
-  }, []);
+    const available = isLocalStorageAvailable();
+    setStorageAvailable(available);
+    
+    if (!available) {
+      toast({
+        title: "Storage Warning",
+        description: "Local storage is not available. Articles will not persist between sessions.",
+        variant: "destructive"
+      });
+    }
+    
+    try {
+      const loadedArticles = getAllArticles();
+      console.log('Admin page loaded articles:', loadedArticles.length);
+      setArticles(loadedArticles);
+    } catch (error) {
+      console.error('Error loading articles:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load articles. Please try refreshing the page.",
+        variant: "destructive"
+      });
+    }
+  }, [toast]);
 
   const handleSaveArticle = () => {
     if (!currentArticle.title || !currentArticle.content) {
@@ -41,30 +62,37 @@ const Admin = () => {
       return;
     }
 
-    const savedArticle = saveArticle({
-      ...currentArticle,
-      date: currentArticle.date || new Date().toISOString().split('T')[0]
-    });
-    
-    // Refresh the articles list
-    setArticles(getAllArticles());
-    
-    toast({
-      title: "Success",
-      description: "Your article has been saved successfully."
-    });
-    
-    // Reset form if it was a new article
-    if (!currentArticle.id) {
-      setCurrentArticle({
-        id: '',
-        title: '',
-        excerpt: '',
-        content: '',
-        category: 'Marketing Strategy',
-        date: new Date().toISOString().split('T')[0],
-        author: 'Admin',
-        published: false
+    try {
+      const savedArticle = saveArticle({
+        ...currentArticle,
+        date: currentArticle.date || new Date().toISOString().split('T')[0]
+      });
+      
+      setArticles(getAllArticles());
+      
+      toast({
+        title: "Success",
+        description: "Your article has been saved successfully."
+      });
+      
+      if (!currentArticle.id) {
+        setCurrentArticle({
+          id: '',
+          title: '',
+          excerpt: '',
+          content: '',
+          category: 'Marketing Strategy',
+          date: new Date().toISOString().split('T')[0],
+          author: 'Admin',
+          published: false
+        });
+      }
+    } catch (error) {
+      console.error('Error saving article:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save article. Please try again.",
+        variant: "destructive"
       });
     }
   };
@@ -79,22 +107,29 @@ const Admin = () => {
       return;
     }
 
-    const publishedArticle = saveArticle({
-      ...currentArticle,
-      date: currentArticle.date || new Date().toISOString().split('T')[0],
-      published: true
-    });
-    
-    // Refresh the articles list
-    setArticles(getAllArticles());
-    
-    toast({
-      title: "Published",
-      description: "Your article has been published successfully."
-    });
-    
-    // Navigate to insights page to see the published content
-    navigate('/insights');
+    try {
+      saveArticle({
+        ...currentArticle,
+        date: currentArticle.date || new Date().toISOString().split('T')[0],
+        published: true
+      });
+      
+      setArticles(getAllArticles());
+      
+      toast({
+        title: "Published",
+        description: "Your article has been published successfully."
+      });
+      
+      navigate('/insights');
+    } catch (error) {
+      console.error('Error publishing article:', error);
+      toast({
+        title: "Error",
+        description: "Failed to publish article. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const editArticle = (article: Article) => {
@@ -102,26 +137,34 @@ const Admin = () => {
   };
 
   const handleDeleteArticle = (id: string) => {
-    deleteArticle(id);
-    
-    // Refresh the articles list
-    setArticles(getAllArticles());
-    
-    toast({
-      title: "Deleted",
-      description: "The article has been deleted."
-    });
-    
-    if (currentArticle.id === id) {
-      setCurrentArticle({
-        id: '',
-        title: '',
-        excerpt: '',
-        content: '',
-        category: 'Marketing Strategy',
-        date: new Date().toISOString().split('T')[0],
-        author: 'Admin',
-        published: false
+    try {
+      deleteArticle(id);
+      
+      setArticles(getAllArticles());
+      
+      toast({
+        title: "Deleted",
+        description: "The article has been deleted."
+      });
+      
+      if (currentArticle.id === id) {
+        setCurrentArticle({
+          id: '',
+          title: '',
+          excerpt: '',
+          content: '',
+          category: 'Marketing Strategy',
+          date: new Date().toISOString().split('T')[0],
+          author: 'Admin',
+          published: false
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting article:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete article. Please try again.",
+        variant: "destructive"
       });
     }
   };
@@ -139,6 +182,12 @@ const Admin = () => {
               <h1 className="text-3xl md:text-4xl font-bold mb-6">
                 Admin Content Manager
               </h1>
+              {!storageAvailable && (
+                <div className="bg-destructive/20 text-destructive p-4 rounded-md mb-6">
+                  <p className="font-medium">Warning: Local Storage Not Available</p>
+                  <p className="text-sm">Articles will not persist between sessions. This could be due to private browsing mode or browser settings.</p>
+                </div>
+              )}
               <p className="text-lg text-muted-foreground mb-8">
                 Create, edit and publish your insights and articles.
               </p>
@@ -149,7 +198,6 @@ const Admin = () => {
         <section className="py-8">
           <div className="container mx-auto px-4">
             <div className="flex flex-col lg:flex-row gap-8">
-              {/* Editor */}
               <div className="lg:w-8/12">
                 <div className="cyber-card p-6">
                   <h2 className="text-xl font-bold mb-4">Content Editor</h2>
@@ -245,7 +293,6 @@ const Admin = () => {
                 </div>
               </div>
               
-              {/* Saved Articles */}
               <div className="lg:w-4/12">
                 <div className="cyber-card p-6">
                   <h2 className="text-xl font-bold mb-4">Your Articles</h2>
