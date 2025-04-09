@@ -26,7 +26,7 @@ const Navbar = () => {
           <Link to="/solutions" className="text-foreground hover:text-cyber-purple transition-colors">Solutions</Link>
           <Link to="/insights" className="text-foreground hover:text-cyber-purple transition-colors">Insights</Link>
           <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors">About Us</Link>
-          <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors">Admin</Link>
+          <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors"></Link>
           <Link to="/contact">
             <Button variant="default" className="bg-cyber-purple hover:bg-cyber-purple-light ml-2">
               Contact Us
