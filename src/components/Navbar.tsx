@@ -1,11 +1,16 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Shield, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  
+  // Admin link is only visible when already on the admin page
+  // This creates a "secret" admin access - users need to know the direct URL
+  const showAdminLink = location.pathname === '/admin';
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -26,7 +31,9 @@ const Navbar = () => {
           <Link to="/solutions" className="text-foreground hover:text-cyber-purple transition-colors">Solutions</Link>
           <Link to="/insights" className="text-foreground hover:text-cyber-purple transition-colors">Insights</Link>
           <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors">About Us</Link>
-          <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors">Admin</Link>
+          {showAdminLink && (
+            <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors">Admin</Link>
+          )}
           <Link to="/contact">
             <Button variant="default" className="bg-cyber-purple hover:bg-cyber-purple-light ml-2">
               Contact Us
@@ -52,7 +59,9 @@ const Navbar = () => {
             <Link to="/solutions" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Solutions</Link>
             <Link to="/insights" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Insights</Link>
             <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>About Us</Link>
-            <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Admin</Link>
+            {showAdminLink && (
+              <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Admin</Link>
+            )}
             <Link to="/contact" onClick={toggleMenu}>
               <Button variant="default" className="bg-cyber-purple hover:bg-cyber-purple-light w-full">
                 Contact Us
