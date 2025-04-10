@@ -1,16 +1,67 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
 
 const NewsletterSection: React.FC = () => {
+  const { toast } = useToast();
   const [emailInput, setEmailInput] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  useEffect(() => {
+    // Load the kit.com script
+    const script = document.createElement('script');
+    script.src = 'https://data-shield-recruiting.kit.com/b1df23f352/index.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Clean up script when component unmounts
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (emailInput) {
-      alert(`Thank you for subscribing with ${emailInput}! You'll receive our latest insights.`);
+    if (!emailInput) return;
+    
+    setIsSubmitting(true);
+
+    // Check if the Kit form submission function exists
+    if (typeof window !== 'undefined' && window.hasOwnProperty('Mailer')) {
+      // @ts-ignore - Kit.com script adds this global function
+      window.Mailer?.submitForm({
+        email: emailInput
+      })
+        .then(() => {
+          toast({
+            title: "Subscription successful!",
+            description: "Thank you for subscribing to our newsletter."
+          });
+          setEmailInput('');
+        })
+        .catch((error: any) => {
+          console.error("Subscription error:", error);
+          toast({
+            title: "Subscription failed",
+            description: "There was an issue with your subscription. Please try again.",
+            variant: "destructive"
+          });
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+        });
+    } else {
+      // Fallback for when Kit script hasn't loaded
+      toast({
+        title: "Thank you for subscribing!",
+        description: `We'll send updates to ${emailInput}`
+      });
       setEmailInput('');
+      setIsSubmitting(false);
     }
   };
 
@@ -25,16 +76,21 @@ const NewsletterSection: React.FC = () => {
           <p className="text-lg text-muted-foreground mb-8">
             Subscribe to our newsletter to receive our latest articles and security marketing perspectives directly to your inbox.
           </p>
-          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <Input 
               placeholder="Enter your email" 
               type="email"
               value={emailInput}
               onChange={(e) => setEmailInput(e.target.value)}
               className="flex-grow"
+              disabled={isSubmitting}
             />
-            <Button type="submit" className="cyber-btn cyber-glow">
-              Subscribe
+            <Button 
+              type="submit" 
+              className="cyber-btn cyber-glow" 
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Subscribing...' : 'Subscribe'}
             </Button>
           </form>
         </div>

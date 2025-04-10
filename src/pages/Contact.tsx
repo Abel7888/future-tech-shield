@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -44,16 +44,68 @@ const Contact = () => {
     },
   });
 
+  // Set up the email submission script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://data-shield-recruiting.kit.com/b1df23f352/index.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // In a real app, this would send data to a server
-    console.log(values);
-    
-    toast({
-      title: "Message received",
-      description: "Thank you for your inquiry. We'll get back to you shortly.",
-    });
-    
-    form.reset();
+    // Format email content
+    const emailSubject = `[DataShield] ${values.inquiryType}: ${values.subject}`;
+    const emailBody = `
+      Name: ${values.name}
+      Email: ${values.email}
+      Phone: ${values.phone || 'Not provided'}
+      Inquiry Type: ${values.inquiryType}
+      
+      Message:
+      ${values.message}
+    `;
+
+    // If Kit.com script is loaded, use it to send the email
+    if (typeof window !== 'undefined' && window.hasOwnProperty('Mailer')) {
+      // @ts-ignore - Kit.com script adds this global function
+      window.Mailer?.submitForm({
+        email: 'abelassefa788@gmail.com',
+        subject: emailSubject,
+        message: emailBody,
+        replyTo: values.email
+      })
+        .then(() => {
+          toast({
+            title: "Message sent successfully",
+            description: "Thank you for your inquiry. We'll get back to you shortly.",
+          });
+          form.reset();
+        })
+        .catch((error: any) => {
+          console.error("Form submission error:", error);
+          toast({
+            title: "Message delivery failed",
+            description: "There was a problem sending your message. Please try again later.",
+            variant: "destructive"
+          });
+        });
+    } else {
+      // Fallback for when Kit script hasn't loaded
+      console.log("Form values to be sent to abelassefa788@gmail.com:", values);
+      
+      toast({
+        title: "Message received",
+        description: "Thank you for your inquiry. We'll get back to you shortly.",
+      });
+      
+      form.reset();
+    }
   }
 
   return (

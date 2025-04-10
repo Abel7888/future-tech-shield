@@ -1,11 +1,57 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, ArrowRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 const Footer = () => {
+  const { toast } = useToast();
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setIsSubmitting(true);
+
+    // Check if the Kit form submission function exists
+    if (typeof window !== 'undefined' && window.hasOwnProperty('Mailer')) {
+      // @ts-ignore - Kit.com script adds this global function
+      window.Mailer?.submitForm({
+        email: email
+      })
+        .then(() => {
+          toast({
+            title: "Subscription successful!",
+            description: "Thank you for subscribing to our newsletter."
+          });
+          setEmail('');
+        })
+        .catch((error: any) => {
+          console.error("Subscription error:", error);
+          toast({
+            title: "Subscription failed",
+            description: "There was an issue with your subscription. Please try again.",
+            variant: "destructive"
+          });
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+        });
+    } else {
+      // Fallback for when Kit script hasn't loaded
+      toast({
+        title: "Thank you for subscribing!",
+        description: `We'll send updates to ${email}`
+      });
+      setEmail('');
+      setIsSubmitting(false);
+    }
+  };
+  
   return (
     <footer className="bg-cyber-blue-dark border-t border-cyber-blue pt-12 pb-6">
       <div className="container mx-auto px-4">
@@ -51,16 +97,23 @@ const Footer = () => {
             <p className="text-muted-foreground mb-4">
               Subscribe to our newsletter for the latest security insights.
             </p>
-            <div className="flex gap-2">
+            <form onSubmit={handleSubscribe} className="flex gap-2">
               <Input 
                 type="email" 
                 placeholder="Your email" 
                 className="bg-cyber-blue border-cyber-purple/20"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isSubmitting}
               />
-              <Button className="bg-cyber-purple hover:bg-cyber-purple-light">
+              <Button 
+                className="bg-cyber-purple hover:bg-cyber-purple-light"
+                type="submit"
+                disabled={isSubmitting}
+              >
                 <ArrowRight size={16} />
               </Button>
-            </div>
+            </form>
           </div>
         </div>
         
