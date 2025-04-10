@@ -123,7 +123,7 @@ const Contact = () => {
                 Get in Touch
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
-                Have questions about our services? Contact our team for more information.
+                Have questions about our services? Contact our us for more information.
               </p>
             </div>
           </div>
@@ -143,7 +143,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-medium">Email</p>
-                      <p className="text-muted-foreground">info@futuretech-shield.com</p>
+                      <p className="text-muted-foreground">info@Datashieldsecurity.xyz.com</p>
                     </div>
                   </div>
                   
@@ -153,7 +153,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-medium">Phone</p>
-                      <p className="text-muted-foreground">+1 (888) 555-0123</p>
+                      <p className="text-muted-foreground">+1 (571) 251-2195</p>
                     </div>
                   </div>
                   
@@ -162,8 +162,8 @@ const Contact = () => {
                       <MessageSquare className="text-cyber-purple h-5 w-5" />
                     </div>
                     <div>
-                      <p className="font-medium">Office Hours</p>
-                      <p className="text-muted-foreground">Monday-Friday: 9am-5pm EST</p>
+                      <p className="font-medium"></p>
+                      <p className="text-muted-foreground"></p>
                     </div>
                   </div>
                 </div>
