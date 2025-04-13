@@ -8,8 +8,8 @@ import Index from "./pages/Index";
 import Industries from "./pages/Industries";
 import Solutions from "./pages/Solutions";
 import About from "./pages/About";
-import Insights from "./pages/Insights";
-import ArticleView from "./pages/ArticleView";
+// import Insights from "./pages/Insights";  // Remove this import
+// import ArticleView from "./pages/ArticleView";  // Remove this import
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -38,8 +38,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/industries" element={<Industries />} />
           <Route path="/solutions" element={<Solutions />} />
-          <Route path="/insights" element={<Insights />} />
-          <Route path="/insights/:id" element={<ArticleView />} />
+          {/* <Route path="/insights" element={<Insights />} /> */}
+          {/* <Route path="/insights/:id" element={<ArticleView />} /> */}
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/admin" element={<Admin />} />

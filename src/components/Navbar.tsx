@@ -29,7 +29,6 @@ const Navbar = () => {
           <Link to="/" className="text-foreground hover:text-cyber-purple transition-colors">Home</Link>
           <Link to="/industries" className="text-foreground hover:text-cyber-purple transition-colors">Industries</Link>
           <Link to="/solutions" className="text-foreground hover:text-cyber-purple transition-colors">Solutions</Link>
-          <Link to="/insights" className="text-foreground hover:text-cyber-purple transition-colors">Insights</Link>
           <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors">About Us</Link>
           {showAdminLink && (
             <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors">Admin</Link>
@@ -57,7 +56,6 @@ const Navbar = () => {
             <Link to="/" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Home</Link>
             <Link to="/industries" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Industries</Link>
             <Link to="/solutions" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Solutions</Link>
-            <Link to="/insights" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Insights</Link>
             <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>About Us</Link>
             {showAdminLink && (
               <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Admin</Link>
