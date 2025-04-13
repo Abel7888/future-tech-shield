@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -141,9 +140,9 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               {[
                 {
-                  name: "Alex Chen",
-                  role: "Founder & CEO",
-                  background: "Former CISO with 15+ years in cybersecurity"
+                  name: "Abel Assefa",
+                  role: "Marketing & Software Engineer",
+                  background: "Experienced in tech marketing and software development"
                 },
                 {
                   name: "Sarah Novak",
