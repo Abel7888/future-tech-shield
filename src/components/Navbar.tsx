@@ -27,11 +27,11 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-6">
           <Link to="/" className="text-foreground hover:text-cyber-purple transition-colors">Home</Link>
-          <Link to="/industries" className="text-foreground hover:text-cyber-purple transition-colors">Industries</Link>
-          <Link to="/solutions" className="text-foreground hover:text-cyber-purple transition-colors">Solutions</Link>
-          <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors">About Us</Link>
+          <Link to="/industries" className="text-foreground hover:text-cyber-purple transition-colors"></Link>
+          <Link to="/solutions" className="text-foreground hover:text-cyber-purple transition-colors"></Link>
+          <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors"></Link>
           {showAdminLink && (
-            <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors">Admin</Link>
+            <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors"></Link>
           )}
           <Link to="/contact">
           
@@ -55,11 +55,11 @@ const Navbar = () => {
         <div className="lg:hidden py-4 bg-background border-t border-border">
           <div className="container mx-auto px-4 flex flex-col space-y-3">
             <Link to="/" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Home</Link>
-            <Link to="/industries" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Industries</Link>
-            <Link to="/solutions" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Solutions</Link>
-            <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>About Us</Link>
+            <Link to="/industries" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}></Link>
+            <Link to="/solutions" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}></Link>
+            <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}></Link>
             {showAdminLink && (
-              <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}>Admin</Link>
+              <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors py-2" onClick={toggleMenu}></Link>
             )}
             <Link to="/contact" onClick={toggleMenu}>
               <Button variant="default" className="bg-cyber-purple hover:bg-cyber-purple-light w-full">
