@@ -27,6 +27,13 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-6">
           <Link to="/" className="text-foreground hover:text-cyber-purple transition-colors">Home</Link>
+          <Link to="/industries" className="text-foreground hover:text-cyber-purple transition-colors">Industries</Link>
+          <Link to="/solutions" className="text-foreground hover:text-cyber-purple transition-colors">Solutions</Link>
+          <Link to="/about" className="text-foreground hover:text-cyber-purple transition-colors">About Us</Link>
+          {showAdminLink && (
+            <Link to="/admin" className="text-foreground hover:text-cyber-purple transition-colors">Admin</Link>
+          )}
+          <Link to="/contact">
           
             <Button variant="default" className="bg-cyber-purple hover:bg-cyber-purple-light ml-2">
               Contact Us
