@@ -36,7 +36,7 @@ const Navbar = () => {
           <Link to="/contact">
           
             <Button variant="default" className="bg-cyber-purple hover:bg-cyber-purple-light ml-2">
-              Contact Us
+              
             </Button>
           </Link>
         </div>
@@ -63,7 +63,7 @@ const Navbar = () => {
             )}
             <Link to="/contact" onClick={toggleMenu}>
               <Button variant="default" className="bg-cyber-purple hover:bg-cyber-purple-light w-full">
-                Contact Us
+                
               </Button>
             </Link>
           </div>
