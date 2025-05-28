@@ -71,11 +71,11 @@ const Footer = () => {
           <div>
             <h5 className="font-semibold mb-4">Data Shield Partners Solutions</h5>
             <ul className="space-y-2">
-              <li><Link to="/" className="text-muted-foreground hover:text-cyber-purple transition-colors">Home</Link></li>
-              <li><Link to="/industries" className="text-muted-foreground hover:text-cyber-purple transition-colors">Data Shield Healthcare</Link></li>
-              <li><Link to="/insights" className="text-muted-foreground hover:text-cyber-purple transition-colors">Data Shield Proptech</Link></li>
+              
+              <li><Link to="https://www.datashieldhealthcare.space/" className="text-muted-foreground hover:text-cyber-purple transition-colors">Data Shield Healthcare</Link></li>
+              <li><Link to="https://www.datashieldnewsletter.info/" className="text-muted-foreground hover:text-cyber-purple transition-colors">Data Shield Home</Link></li>
               <li><Link to="https://www.datashieldpartners.blog" className="text-muted-foreground hover:text-cyber-purple transition-colors">Data Shield Blogs/insights</Link></li>
-              <li><Link to="/contact" className="text-muted-foreground hover:text-cyber-purple transition-colors">Data Shield Fintech</Link></li>
+              <li><Link to="https://www.datashielddigital.xyz/" className="text-muted-foreground hover:text-cyber-purple transition-colors">Data Shield Fintech and Proptech</Link></li>
             </ul>
           </div>
           
